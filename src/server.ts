@@ -3,6 +3,7 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
 import { envVars } from "./config/env";
+import { seedSuperAdmin } from "./utils/seedSuperAdmin";
 
 let server: Server;
 
@@ -20,56 +21,57 @@ const startServer = async () => {
 
 (async () => {
   await startServer();
+  await seedSuperAdmin();
 })();
 
 process.on("unhandledRejection", (error) => {
-    console.log("Unhandled Rejection, Server shutting down!", error);
+  console.log("Unhandled Rejection, Server shutting down!", error);
 
-    if(server) {
-        server.close(() => {
-            console.log("Server Closed Now!")
-            process.exit(1);
-        })
-    }
+  if (server) {
+    server.close(() => {
+      console.log("Server Closed Now!");
+      process.exit(1);
+    });
+  }
 
-    process.exit(1);
-})
+  process.exit(1);
+});
 
 process.on("uncaughtException", (error) => {
-    console.log("Uncaught Exception, Server shutting down!", error);
+  console.log("Uncaught Exception, Server shutting down!", error);
 
-    if(server) {
-        server.close(() => {
-            console.log("Server Closed Now!")
-            process.exit(1);
-        })
-    }
+  if (server) {
+    server.close(() => {
+      console.log("Server Closed Now!");
+      process.exit(1);
+    });
+  }
 
-    process.exit(1);
-})
+  process.exit(1);
+});
 
 process.on("SIGTERM", () => {
-    console.log("SIGTERM RECEIVED, Server shutting down!");
+  console.log("SIGTERM RECEIVED, Server shutting down!");
 
-    if (server) {
-        server.close(() => {
-            console.log("Server Closed Now!")
-            process.exit(1);
-        })
-    }
+  if (server) {
+    server.close(() => {
+      console.log("Server Closed Now!");
+      process.exit(1);
+    });
+  }
 
-    process.exit(1);
-})
+  process.exit(1);
+});
 
 process.on("SIGINT", () => {
-    console.log("SIGINT RECEIVED, Server shutting down!");
+  console.log("SIGINT RECEIVED, Server shutting down!");
 
-    if (server) {
-        server.close(() => {
-            console.log("Server Closed Now!")
-            process.exit(1);
-        })
-    }
+  if (server) {
+    server.close(() => {
+      console.log("Server Closed Now!");
+      process.exit(1);
+    });
+  }
 
-    process.exit(1);
-})
+  process.exit(1);
+});
